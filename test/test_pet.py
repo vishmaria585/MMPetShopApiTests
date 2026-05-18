@@ -9,4 +9,8 @@ class TestPet:
     def test_delete_nonexistent_pet(self):
         with allure.step("Отправка запроса на удаление несуществующего питомца"):
             response = requests.delete(url=f"{BASE_URL}/pet/9999")
-            print(response)
+        with allure.step("Проверка статуса ответа"):
+             assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
+
+        with allure.step("Проверка текстового содержимого ответа"):
+             assert response.text == "Pet deleted", "Текст ошибки не сопал с ожидаемым"
